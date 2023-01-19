@@ -11,7 +11,7 @@ public class UserServiceImpl implements UserService{
     private UserRepository userRepository;
     @Override
     public void saveUser(User user) throws Exception {
-        System.out.println(user.getCtcLinkId());
+        System.out.println(user.getUserId());
         authenticateId(user);
         authenticateEmail(user);
         authenticateUsername(user);
@@ -20,8 +20,8 @@ public class UserServiceImpl implements UserService{
     }
     //sign in user
     @Override
-    public User findUser(String username, String password) throws Exception {
-        Optional<User> userOptional = userRepository.findUserByUsername(username);
+    public User findUser(String email, String password) throws Exception {
+        Optional<User> userOptional = userRepository.findUserByEmail(email);
         if(userOptional.isEmpty()) throw new Exception("Username does not exist");
         if(!userOptional.get().getPassword().equals(password)) throw new Exception("Incorrect password");
         return userOptional.get();
@@ -40,20 +40,20 @@ public class UserServiceImpl implements UserService{
     }
 
     private void authenticateId(User user) throws Exception {
-        if(Integer.toString(user.getCtcLinkId()).length() != 9){
+        if(Integer.toString(user.getUserId()).length() != 9){
             throw new Exception("Insert a valid ctcLink ID");
         }
-        if(userRepository.existsById(user.getCtcLinkId())){ //Checking if the user already exists
+        if(userRepository.existsById(user.getUserId())){ //Checking if the user already exists
             throw new Exception("The user already exists.");
         }
     }
     private void authenticateEmail(User user) throws Exception {
         //Checking if the email already exists
-        if(user.getBcEmail().contains(" ")) throw new Exception("The email cannot contain spaces");
-        if(!user.getBcEmail().toLowerCase().endsWith("@bellevuecollege.edu")){ //Checking if the email is a BC email
+        if(user.getEmail().contains(" ")) throw new Exception("The email cannot contain spaces");
+        if(!user.getEmail().toLowerCase().endsWith("@bellevuecollege.edu")){ //Checking if the email is a BC email
             throw new Exception("The user must have a Bellevue College email.");
         }
-        Optional<User> emailOptional = userRepository.findUserByEmail(user.getBcEmail());
+        Optional<User> emailOptional = userRepository.findUserByEmail(user.getEmail());
         if(emailOptional.isPresent()) throw new Exception("The email is already taken");
     }
     private void authenticatePassword(String password) throws Exception {

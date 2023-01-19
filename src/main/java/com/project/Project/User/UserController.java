@@ -16,14 +16,13 @@ public class UserController {
         System.out.println("yes");
         return user;
     }
-    @GetMapping("/signIn")
-    public User signInUser(@RequestParam String username,
-                           @RequestParam String password) throws Exception {
-        return userService.findUser(username, password);
+    @PostMapping("/signIn")
+    public User signInUser(@RequestBody User user) throws Exception {
+        return userService.findUser(user.getEmail(), user.getPassword());
     }
-    @PutMapping("/modifypassword/{ctcLinkId}")
-    public boolean modifyPassword(@PathVariable("ctcLinkId") int ctcLinkId, @RequestParam String previousPassword, @RequestParam String newPassword) throws Exception {
-        return userService.setPassword(ctcLinkId, previousPassword, newPassword);
+    @PutMapping("/modifypassword/{userId}")
+    public boolean modifyPassword(@PathVariable("userId") int userId, @RequestParam String previousPassword, @RequestParam String newPassword) throws Exception {
+        return userService.setPassword(userId, previousPassword, newPassword);
     }
 
 }

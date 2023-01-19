@@ -8,22 +8,23 @@ import java.util.List;
 @Entity
 public class User {
     @Id
-    private int ctcLinkId;
+    private int userId;
     private String username;
-    private String bcEmail;
+    private String email;
     private String password;
     //private Forum[] following;
     private String[] interests;
 
-    public User() {
+    public User(){
+
     }
 
-    public int getCtcLinkId() {
-        return ctcLinkId;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setCtcLinkId(int ctcLinkId) {
-        this.ctcLinkId = ctcLinkId;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {
@@ -34,12 +35,12 @@ public class User {
         this.username = username;
     }
 
-    public String getBcEmail() {
-        return bcEmail;
+    public String getEmail() {
+        return email;
     }
 
-    public void setBcEmail(String bcEmail) {
-        this.bcEmail = bcEmail;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
