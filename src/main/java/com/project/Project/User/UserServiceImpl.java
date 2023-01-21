@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService{
     }
 
     private void authenticateId(User user) throws Exception {
-        if(Integer.toString(user.getUserId()).length() != 9){
+        if(Long.toString(user.getUserId()).length() != 9){
             throw new Exception("Insert a valid ctcLink ID");
         }
         if(userRepository.existsById(user.getUserId())){ //Checking if the user already exists

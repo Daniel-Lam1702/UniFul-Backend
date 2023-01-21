@@ -1,19 +1,24 @@
 package com.project.Project.User;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import com.project.Project.Post.Post;
+import jakarta.persistence.*;
 
 import java.util.List;
 
 @Entity
+@Table(name = "users")
 public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "user_id")
     private int userId;
     private String username;
     private String email;
     private String password;
     //private Forum[] following;
-    private String[] interests;
+    private List<String> interests;
+    @OneToMany(mappedBy = "posterId")
+    private List<Post> postId;
 
     public User(){
 
@@ -51,11 +56,11 @@ public class User {
         this.password = password;
     }
 
-    public String[] getInterests() {
+    public List<String> getInterests() {
         return interests;
     }
 
-    public void setInterests(String[] interests) {
+    public void setInterests(List<String> interests) {
         this.interests = interests;
     }
 }

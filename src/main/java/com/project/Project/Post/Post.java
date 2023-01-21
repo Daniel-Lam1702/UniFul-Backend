@@ -1,18 +1,38 @@
 package com.project.Project.Post;
 
 import com.project.Project.User.User;
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "posts")
 public class Post {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "post_id")
+    private int postId; //post id and the poster will never change :3
     private String title;
     private String content;
-    private final int postId; //post id and the poster will never change :3
-    private final User poster;
 
-    public Post(String title, String content, User poster, int postId){
+    @ManyToOne
+    @JoinColumn(name = "poster_id_user_id")
+    private User posterId;
+
+    public User getPosterId() {
+        return posterId;
+    }
+
+    public void setPosterId(User posterId) {
+        this.posterId = posterId;
+    }
+
+    public Post(String title, String content, int postId){
         this.title = title;
         this.content = content;
         this.postId =  postId;
-        this.poster = poster;
+    }
+
+    public Post() {
+
     }
 
     public String getContent(){
@@ -24,9 +44,6 @@ public class Post {
     }
     public int getPostId(){
         return postId;
-    }
-    public User getPoster(){
-        return poster;
     }
 
     public void setTitle(String newTitle){
